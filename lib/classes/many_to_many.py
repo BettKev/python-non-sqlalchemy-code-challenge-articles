@@ -30,10 +30,13 @@ class Author:
         return list({article.magazine for article in Article.all if article.author == self})
 
     def add_article(self, magazine, title):
-        pass
+        # Create a new article and return it
+        new_article = Article(self, magazine, title)
+        return new_article
 
     def topic_areas(self):
-        pass
+    # Use the magazines method to get all magazines and extract their categories
+        return list({magazine.category for magazine in self.magazines()})
 
 class Magazine:
     def __init__(self, name, category):
@@ -41,13 +44,21 @@ class Magazine:
         self.category = category
 
     def articles(self):
-        pass
+        # Return a list of articles where the magazine matches self
+        return [article for article in Article.all if article.magazine == self]
 
     def contributors(self):
-        pass
+        # Return a list of unique authors who have written articles for this magazine
+        return list({article.author for article in Article.all if article.magazine == self})
 
     def article_titles(self):
-        pass
+        # Return a list of titles of articles published in this magazine
+        return [article.title for article in Article.all if article.magazine == self]
 
     def contributing_authors(self):
-        pass
+        # Return a list of authors who have written more than one article for this magazine
+        author_counts = {}
+        for article in self.articles():
+            author = article.author
+            author_counts[author] = author_counts.get(author, 0) + 1
+        return [author for author, count in author_counts.items() if count > 1]
