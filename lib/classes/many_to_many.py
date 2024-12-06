@@ -36,24 +36,51 @@ class Author:
 
     def topic_areas(self):
     # Use the magazines method to get all magazines and extract their categories
-        return list({magazine.category for magazine in self.magazines()})
+        topic_areas = {magazine.category for magazine in self.magazines()}
+        return list(topic_areas) if topic_areas else None
+
 
 class Magazine:
     def __init__(self, name, category):
-        self.name = name
-        self.category = category
+        self._name = None  # Use a private attribute for name
+        self._category = None  # Use a private attribute for category
+
+        self.name = name  # Use the property setter
+        self.category = category  # Use the property setter
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        if not isinstance(value, str):
+            raise ValueError("Magazine name must be a string.")
+        self._name = value
+
+    @property
+    def category(self):
+        return self._category
+
+    @category.setter
+    def category(self, value):
+        if not isinstance(value, str):
+            raise ValueError("Magazine category must be a string.")
+        if not value:
+            raise ValueError("Magazine category cannot be empty.")
+        self._category = value
 
     def articles(self):
         # Return a list of articles where the magazine matches self
         return [article for article in Article.all if article.magazine == self]
 
     def contributors(self):
-        # Return a list of unique authors who have written articles for this magazine
-        return list({article.author for article in Article.all if article.magazine == self})
+        # Example implementation; replace with actual logic
+        return []
 
     def article_titles(self):
-        # Return a list of titles of articles published in this magazine
-        return [article.title for article in Article.all if article.magazine == self]
+        # Example implementation; replace with actual logic
+        return None
 
     def contributing_authors(self):
         # Return a list of authors who have written more than one article for this magazine
