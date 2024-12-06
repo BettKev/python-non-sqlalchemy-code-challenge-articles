@@ -20,17 +20,10 @@ class Author:
     @property
     def name(self):
         return self._name # Provide read-only access to the name
-    
-    @name.setter
-    def name(self, value):
-        if isinstance(value, str) and len(value) > 0:
-            self._name = value
-        else:
-            raise ValueError("Name must be a non-empty string.")
-
 
     def articles(self):
-        pass
+        # Return a list of articles where the author matches self
+        return [article for article in Article.all if article.author == self]
 
     def magazines(self):
         pass
