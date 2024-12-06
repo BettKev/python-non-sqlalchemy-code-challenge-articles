@@ -26,7 +26,8 @@ class Author:
         return [article for article in Article.all if article.author == self]
 
     def magazines(self):
-        pass
+         # Collect unique magazines where the author has written articles
+        return list({article.magazine for article in Article.all if article.author == self})
 
     def add_article(self, magazine, title):
         pass
