@@ -1,12 +1,23 @@
 class Article:
+    #Class level list to store all Article instances
+    all=[]
     def __init__(self, author, magazine, title):
         self.author = author
         self.magazine = magazine
-        self.title = title
-        
+        self._title = title  # Use a private variable to store the title
+        Article.all.append(self)
+    
+    @property
+    def title(self):
+        return self._title  # Provide read-only access to the title
+
 class Author:
     def __init__(self, name):
-        self.name = name
+        self._name = name
+
+    @property
+    def name(self):
+        return self._name
 
     def articles(self):
         pass
