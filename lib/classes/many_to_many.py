@@ -75,17 +75,23 @@ class Magazine:
         return [article for article in Article.all if article.magazine == self]
 
     def contributors(self):
-        # Example implementation; replace with actual logic
-        return []
+        # Collect unique authors who have contributed to the magazine
+        return list({article.author for article in self.articles()})
 
     def article_titles(self):
-        # Example implementation; replace with actual logic
-        return None
+    # Return a list of titles for all articles written for this magazine
+        titles = [article.title for article in self.articles()]
+        return titles if titles else None
 
     def contributing_authors(self):
-        # Return a list of authors who have written more than one article for this magazine
+    # Return a list of authors who have written more than one article for this magazine
         author_counts = {}
         for article in self.articles():
             author = article.author
             author_counts[author] = author_counts.get(author, 0) + 1
-        return [author for author, count in author_counts.items() if count > 1]
+
+    # Filter authors who have written more than 2 articles
+        authors_with_multiple_articles = [author for author, count in author_counts.items() if count > 2]
+
+    # Return None if no authors meet the condition, otherwise return the list
+        return authors_with_multiple_articles if authors_with_multiple_articles else None
